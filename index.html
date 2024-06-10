@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="input.css">
+</head>
+
+<body>
+    <div class="bg-white dark:bg-black  h-screen flex justify-center items-center">
+
+        <div class="bg-gray-300 dark:bg-slate-900 max-w-96 h-120 p-8 rounded">
+            <button id="theme-toggle" type="button"><img src="brightness.png" alt="img" class="w-10 sun mb-5">
+                <img src="moon.png" alt="img" class="w-10 moon mb-5"></button>
+
+            <input type="text" id="fname" name="fname" class="border border-black p-2 w-72 appearance-none text-4xl dark:bg-slate-700 dark:text-white"
+                autocomplete="off">
+
+            <div class="">
+                <button onclick="apend('c')"
+                    class=" dark:bg-rose-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3 mx-3">c</button>
+                <button onclick="apend('<=')"
+                    class=" dark:bg-rose-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3 mx-3">&lt;-</button>
+
+
+
+            </div>
+            <div class="flex justify-around">
+                <button onclick="apend('7')" class=" dark:bg-slate-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">7</button>
+                <button onclick="apend('8')" class="dark:bg-slate-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">8</button>
+                <button onclick="apend('9')" class="dark:bg-slate-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">9</button>
+                <button onclick="apend('*')" class="dark:bg-slate-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">*</button>
+            </div>
+            <div class="flex justify-around">
+                <button onclick="apend('4')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">4</button>
+                <button onclick="apend('5')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">5</button>
+                <button onclick="apend('6')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">6</button>
+                <button onclick="apend('-')" class="dark:bg-slate-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">-</button>
+            </div>
+
+            <div class="flex justify-around">
+                <button onclick="apend('1')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">1</button>
+                <button onclick="apend('2')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">2</button>
+                <button onclick="apend('3')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">3</button>
+                <button onclick="apend('+')" class="dark:bg-slate-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">+</button>
+            </div>
+            <div class="flex justify-around">
+                <button onclick="apend('00')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">00</button>
+                <button onclick="apend('0')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">0</button>
+                <button onclick="apend('.')" class=" dark:bg-slate-800 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">.</button>
+                <button onclick="apend('=')" class="dark:bg-rose-700 dark:text-slate-100 bg-green-400 w-12 mt-6 rounded-3xl h-10 text-2xl mb-3">=</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const sun = document.querySelector('.sun');
+        const moon = document.querySelector('.moon');
+        const theam = localStorage.getItem('theme');
+        const sstheme = window.matchMedia("(prefers-color-scheme:dark)").matches;
+
+        const iconToggle = () => {
+            moon.classList.toggle("display-none");
+            sun.classList.toggle("display-none");
+        };
+
+        const theamcheck = () => {
+            if (theam === 'dark' || (!theam && sstheme)) {
+                document.documentElement.classList.add("dark");
+                moon.classList.add("display-none");
+                return;
+            }
+            sun.classList.add("display-none");
+        };
+
+        const themeSwitch = () => {
+            if (document.documentElement.classList.contains("dark")) {
+                document.documentElement.classList.remove("dark");
+                localStorage.setItem('theme', "light");
+                iconToggle();
+                return;
+            }
+
+            document.documentElement.classList.add("dark");
+            localStorage.setItem('theme', "dark");
+            iconToggle();
+
+        };
+
+        sun.addEventListener("click", () => {
+            themeSwitch();
+        });
+
+        moon.addEventListener("click", () => {
+            themeSwitch();
+        });
+
+        theamcheck();
+
+
+        function apend(value) {
+            input = document.getElementById("fname")
+            if (value == '=') {
+                input.value = eval(input.value);
+            } else if (value == 'c') {
+                input.value = "";
+            }
+            else if (value == '<=') {
+                input.value = input.value.slice(0, -1);
+            }
+
+            else {
+                input.value += value;
+            }
+
+        }
+
+
+        console.log('Initial Theme:', theam);
+
+
+    </script>
+
+</body>
+
+</html>
